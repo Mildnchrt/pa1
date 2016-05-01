@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 
+/**
+ * GUI of unitConverter
+ * @author Nutcharueta Sihirunwong 5810545866
+ *
+ */
 public class UI extends JFrame{
 
 	private JFrame frame;
@@ -182,7 +187,6 @@ public class UI extends JFrame{
 	 * An AbstractAction class to exit the UI/program
 	 */
 	public class ExitAction extends AbstractAction {
-		private static final long serialVersionUID = 1L;
 		public ExitAction() {
 			super( "Click to exit !" );
 		}
@@ -191,6 +195,11 @@ public class UI extends JFrame{
 		}
 	}
 	
+	/**
+	 * ActionListener of JMenuItem length
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
 	class setUnitLength implements ActionListener {
 		public void actionPerformed( ActionEvent evt ) {
 			unit1.removeAllItems();
@@ -200,6 +209,12 @@ public class UI extends JFrame{
 			for ( Unit u : unit ) unit2.addItem( u );
 		}
 	}
+	
+	/**
+	 * ActionListener of JMenuItem area
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
 	class setUnitArea implements ActionListener {
 		public void actionPerformed( ActionEvent evt ) {
 			unit1.removeAllItems();
@@ -209,6 +224,12 @@ public class UI extends JFrame{
 			for ( Unit u : unit ) unit2.addItem( u );
 		}
 	}
+	
+	/**
+	 * ActionListener of JMenuItem weight
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
 	class setUnitWeight implements ActionListener {
 		public void actionPerformed( ActionEvent evt ) {
 			unit1.removeAllItems();
@@ -218,6 +239,12 @@ public class UI extends JFrame{
 			for ( Unit u : unit ) unit2.addItem( u );
 		}
 	}
+	
+	/**
+	 * ActionListener of JMenuItem time
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
 	class setUnitTime implements ActionListener {
 		public void actionPerformed( ActionEvent evt ) {
 			unit1.removeAllItems();
@@ -227,6 +254,10 @@ public class UI extends JFrame{
 			for ( Unit u : unit ) unit2.addItem( u );
 		}
 	}
+	
+	/**
+	 * method clear all value when change unit
+	 */
 	public void clear() {
 		unit1.setSelectedIndex(0);
 		unit2.setSelectedIndex(0);

@@ -1,14 +1,10 @@
 package converter;
 /**
  * A difinition of common units length.
- * @author mildnchrt
+ * @author Nutcharueta Sihirunwong 5810545866
  *
  */
 public enum Length implements Unit{
-	/*Deifine the member of enumration
-	 * name = a string name of unit,
-	 * value = multiplier to convert to meter
-	 */
 	METER( "Meter", 1.0 ) ,
 	FOOT( "Foot", 0.3048 ),
 	MILE( "Mile", 1609.344 ),
