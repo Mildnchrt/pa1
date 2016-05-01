@@ -12,10 +12,10 @@ public class UnitConverter {
 		return amount * fromUnit.getValue() / toUnit.getValue();
 	}
 	/**
-	 * return value unit from length
+	 * return value unit from unit type
 	 * @return 
 	 */
-	public Unit[] getUnits() {
-		return Length.values();
+	public Unit[] getUnits( UnitType ut ) {
+		return UnitFactory.getInstance().getUnits( ut );
 	}
 }
