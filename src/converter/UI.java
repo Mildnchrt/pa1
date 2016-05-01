@@ -90,6 +90,7 @@ public class UI extends JFrame{
 		Unit[] unit = unitconverter.getUnits( UnitType.Length );
 		for ( Unit u : unit ) unit1.addItem( u );
 		frame.getContentPane().add( unit1 );
+		unit1.addActionListener( new selectUnitActionListener() );
 		
 		JLabel equal = new JLabel( "=" );
 		equal.setBounds( 238, 40, 61, 16 );
@@ -104,6 +105,7 @@ public class UI extends JFrame{
 		unit2.setBounds( 377, 36, 113, 27 );
 		for ( Unit u : unit ) unit2.addItem( u );
 		frame.getContentPane().add( unit2 );
+		unit2.addActionListener( new selectUnitActionListener() );
 		
 		convertButton = new JButton( "CONVERT" );
 		convertButton.setBounds( 491, 35, 107, 29 );
@@ -332,7 +334,16 @@ public class UI extends JFrame{
 		public void keyReleased(KeyEvent e) {
 			convert();
 		}
-		
+	}
+	/**
+	 * auto detect when select unit
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
+	class selectUnitActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			convert();
+		}
 	}
 	
 	/**
