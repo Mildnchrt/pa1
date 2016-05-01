@@ -13,7 +13,8 @@ public class UnitConverter {
 	}
 	/**
 	 * return value unit from unit type
-	 * @return 
+	 * @param ut is selected unit type
+	 * @return is all unit of selected unit.
 	 */
 	public Unit[] getUnits( UnitType ut ) {
 		return UnitFactory.getInstance().getUnits( ut );

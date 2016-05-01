@@ -1,5 +1,6 @@
 package converter;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,6 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 
@@ -29,6 +34,7 @@ public class UI extends JFrame{
 	private JButton convertButton, clearButton;
 	private UnitConverter unitconverter;
 	private JMenuItem length, area, weight, time;
+	private boolean leftToRight, isError;
 
 	/**
 	 * Launch the application.
@@ -49,6 +55,7 @@ public class UI extends JFrame{
 
 	/**
 	 * Create the application.
+	 * @param uc is unitConverter object
 	 */
 	public UI( UnitConverter uc ) {
 		this.unitconverter = uc;
@@ -110,7 +117,12 @@ public class UI extends JFrame{
 		clearButton.addActionListener(new ClearButtonListener() );
 		
 		input1.addActionListener( new ConvertButtonListener() );
+		input1.addMouseListener( new MouseInputListener() );
+		input1.addKeyListener( new KeyInputListener() );
+		
 	    input2.addActionListener( new ConvertButtonListener() );
+	    input2.addMouseListener( new MouseInputListener() );
+		input2.addKeyListener( new KeyInputListener() );
 	    
 	    length = new JMenuItem("Length");
 	    menu.add(length);
@@ -123,9 +135,7 @@ public class UI extends JFrame{
 	    
 	    time = new JMenuItem("Time");
 	    menu.add(time);
-	    
-
-	    
+	   
 	    exit = new JMenu( "Exit" );
 	    menu.add(exit);
 	    
@@ -167,28 +177,44 @@ public class UI extends JFrame{
 	 * covert input value from initial unit to selected unit
 	 */
 	public void convert() {
-		String s = input1.getText().trim();
-
+		String s;
+		if ( leftToRight ) { s = input1.getText().trim(); }
+		else { s = input2.getText().trim(); }
+		
 		if ( s.length() > 0) {
 			try {
 				double value = Double.valueOf( s );
 				Unit unitSelect1 = (Unit) unit1.getSelectedItem();
 				Unit unitSelect2 = (Unit) unit2.getSelectedItem();
-				input2.setText( Double.toString( unitconverter.converter( value, unitSelect1, unitSelect2 ) ) );
-
+				if ( leftToRight ) {
+					input2.setText(  Double.toString( unitconverter.converter( value, unitSelect1, unitSelect2 ) )  );
+				}
+				else {
+					input1.setText( Double.toString( unitconverter.converter( value, unitSelect2, unitSelect1 ) ) );
+				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch ( NumberFormatException e ) {
+				if ( leftToRight ) {
+					input1.setForeground( Color.RED );
+					input1.selectAll();
+				}
+				else {
+					input2.setForeground( Color.RED );
+					input2.selectAll();
+				}
+				isError = true;
 			}
 		}
 	}
 	
 	/**
 	 * An AbstractAction class to exit the UI/program
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
 	 */
 	public class ExitAction extends AbstractAction {
 		public ExitAction() {
-			super( "Click to exit !" );
+			super( "Are you sure to exit" );
 		}
 		public void actionPerformed( ActionEvent evt ) {
 			System.exit( 0 );
@@ -253,6 +279,60 @@ public class UI extends JFrame{
 			for ( Unit u : unit ) unit1.addItem( u );
 			for ( Unit u : unit ) unit2.addItem( u );
 		}
+	}
+	
+	/**
+	 * MouseListener of JTextField for change text color
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
+	class MouseInputListener implements MouseListener {
+		public void mouseClicked(MouseEvent e) {
+			if ( isError ) {
+				( (JTextField) e.getSource()).setForeground( Color.BLACK );
+				( (JTextField) e.getSource()).setText("");
+				isError = false;
+			}
+			if (e.getSource().equals( input1 )) {
+				input1.selectAll();
+			}
+			else {
+				input2.selectAll();
+			}
+		}
+		public void mousePressed(MouseEvent e) {
+		}
+		public void mouseReleased(MouseEvent e) {
+		}
+		public void mouseEntered(MouseEvent e) {
+		}
+		public void mouseExited(MouseEvent e) {
+		}
+	}
+	
+	/**
+	 * KeyListener of JTextField for change text color to black color
+	 * @author Nutcharueta Sihirunwong 5810545866
+	 *
+	 */
+	class KeyInputListener implements KeyListener {
+		public void keyPressed(KeyEvent e) {
+			
+			( (JTextField) e.getSource() ).setForeground( Color.BLACK );
+			isError = false;
+			
+			if ( e.getSource().equals( input1 ) ) {
+				leftToRight = true; 
+			}
+			else {
+				leftToRight = false;
+			}
+		}
+		public void keyTyped(KeyEvent e) {}
+		public void keyReleased(KeyEvent e) {
+			convert();
+		}
+		
 	}
 	
 	/**

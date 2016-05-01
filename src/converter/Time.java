@@ -7,7 +7,7 @@ package converter;
 public enum Time implements Unit{
 	HOUR( "Hour", 60 ),
 	MINUTE( "Minute", 1 ),
-	SECOND( "Second", (1/60) );
+	SECOND( "Second", (1.0/60) );
 	
 	/**
 	 * name of this unit
